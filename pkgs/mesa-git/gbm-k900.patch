@@ -1,5 +1,5 @@
 diff --git a/src/gbm/backends/dri/gbm_dri.c b/src/gbm/backends/dri/gbm_dri.c
-index 2411868..7db6082 100644
+index 2be7ed2fb68..d68645f0709 100644
 --- a/src/gbm/backends/dri/gbm_dri.c
 +++ b/src/gbm/backends/dri/gbm_dri.c
 @@ -53,11 +53,15 @@
@@ -106,7 +106,7 @@ index 2411868..7db6082 100644
 +};
 diff --git a/src/gbm/backends/dri/meson.build b/src/gbm/backends/dri/meson.build
 new file mode 100644
-index 0000000..29cc08a
+index 00000000000..29cc08a9014
 --- /dev/null
 +++ b/src/gbm/backends/dri/meson.build
 @@ -0,0 +1,12 @@
@@ -123,33 +123,10 @@ index 0000000..29cc08a
 +  name_prefix : '',
 +)
 diff --git a/src/gbm/main/backend.c b/src/gbm/main/backend.c
-index feee070..d5c7f3a 100644
+index e05969844e9..1fc589683c5 100644
 --- a/src/gbm/main/backend.c
 +++ b/src/gbm/main/backend.c
-@@ -42,22 +42,12 @@
- #define ARRAY_SIZE(a) (sizeof(a)/sizeof((a)[0]))
- #define VER_MIN(a, b) ((a) < (b) ? (a) : (b))
- 
--#if defined(HAVE_DRI) || defined(HAVE_DRI2) || defined(HAVE_DRI3)
--extern const struct gbm_backend gbm_dri_backend;
--#endif
--
- struct gbm_backend_desc {
-    const char *name;
-    const struct gbm_backend *backend;
-    void *lib;
- };
- 
--static const struct gbm_backend_desc builtin_backends[] = {
--#if defined(HAVE_DRI) || defined(HAVE_DRI2) || defined(HAVE_DRI3)
--   { "dri", &gbm_dri_backend },
--#endif
--};
--
- #define BACKEND_LIB_SUFFIX "_gbm"
- static const char *backend_search_path_vars[] = {
-    "GBM_BACKENDS_PATH",
-@@ -146,34 +136,29 @@ fail:
+@@ -146,34 +146,29 @@ fail:
     return NULL;
  }
  
@@ -202,7 +179,7 @@ index feee070..d5c7f3a 100644
  
     return dev;
 diff --git a/src/gbm/meson.build b/src/gbm/meson.build
-index 4592833..8d8edeb 100644
+index 4592833154e..8d8edeba862 100644
 --- a/src/gbm/meson.build
 +++ b/src/gbm/meson.build
 @@ -22,14 +22,15 @@ incs_gbm = [
